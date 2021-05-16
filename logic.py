@@ -1,6 +1,5 @@
 import data
 import messages
-import write_logic
 
 file_operation = open(data.file_name, mode="r+", encoding="utf-8")
 lines_read = file_operation.readlines()
@@ -12,6 +11,12 @@ def type_login():
 
 def type_password():
     data.usr_pass = input()
+
+
+def add_new_account():
+    log_write()
+    pass_write()
+    return 0
 
 
 def credential_check():
@@ -42,16 +47,33 @@ def create_account_chose():
     if answer.lower() == "y":
 
         messages.show_message(messages.create_account_yes)
-        write_logic.log_write()
-        write_logic.pass_write()
+        log_write()
+        pass_write()
         messages.show_message(messages.create_account_finish)
         exit()
     else:
         messages.show_message(messages.create_account_no)
-
+        exit()
 
 def file_len():
     lines_num = 0
     for data in lines_read:
         lines_num += 1
     return lines_num
+
+
+def log_write():
+    messages.show_message(messages.create_account_log)
+    data.log_to_write = input()
+    write_line(data.log_to_write)
+
+
+def pass_write():
+    messages.show_message(messages.create_account_pass)
+    data.pass_to_write = input()
+    write_line(data.pass_to_write)
+
+
+def write_line(to_write):
+    file_operation.write(to_write + "\n")
+
