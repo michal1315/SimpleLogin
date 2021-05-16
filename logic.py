@@ -5,6 +5,10 @@ file_operation = open(data.file_name, mode="r+", encoding="utf-8")
 lines_read = file_operation.readlines()
 
 
+def show_message(text):
+    print(text)
+
+
 def type_login():
     data.usr_login = input()
 
@@ -34,11 +38,11 @@ def credential_check():
             current_line += 2
 
             if login == data.usr_login and password == data.usr_pass:
-                messages.show_message(messages.good_credential)
+                show_message(messages.good_credential)
                 break
         else:
-            messages.show_message(messages.bad_credential)
-            messages.show_message(messages.create_account_answer)
+            show_message(messages.bad_credential)
+            show_message(messages.create_account_answer)
             create_account_chose()
 
 
@@ -46,14 +50,15 @@ def create_account_chose():
     answer = input()
     if answer.lower() == "y":
 
-        messages.show_message(messages.create_account_yes)
+        show_message(messages.create_account_yes)
         log_write()
         pass_write()
-        messages.show_message(messages.create_account_finish)
+        show_message(messages.create_account_finish)
         exit()
     else:
-        messages.show_message(messages.create_account_no)
+        show_message(messages.create_account_no)
         exit()
+
 
 def file_len():
     lines_num = 0
@@ -63,13 +68,13 @@ def file_len():
 
 
 def log_write():
-    messages.show_message(messages.create_account_log)
+    show_message(messages.create_account_log)
     data.log_to_write = input()
     write_line(data.log_to_write)
 
 
 def pass_write():
-    messages.show_message(messages.create_account_pass)
+    show_message(messages.create_account_pass)
     data.pass_to_write = input()
     write_line(data.pass_to_write)
 

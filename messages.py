@@ -1,7 +1,3 @@
-def show_message(text):
-    print(text)
-
-
 hello_txt = "Witaj w systemie logowania"
 login_txt = "Wprowadż login:"
 pass_txt = "Wprowadż hasło:"
