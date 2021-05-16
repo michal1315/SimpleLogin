@@ -1,7 +1,7 @@
 import logic
 import messages
 
-
+# logic.heartbeat()
 logic.show_message(messages.hello_txt)
 logic.show_message(messages.login_txt)
 logic.type_login()

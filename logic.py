@@ -4,7 +4,7 @@ import messages
 
 file_operation = open(data.file_name, mode="r+", encoding="utf-8")
 lines_read = file_operation.readlines()
-time_counting = True
+
 
 
 def show_message(text):
@@ -85,12 +85,19 @@ def write_line(to_write):
     file_operation.write(to_write + "\n")
 
 
-def heartbeat():
+def heartbeat(time_out=3):
+    time_counting = True
     counter = 0
     while time_counting:
         time.sleep(1)
+        # https://rumprecordings.bandcamp.com/track/asleep-bwoy-de-bhajan-remix
         counter += 1
         # print(counter)
+        if counter == time_out:
+            break
+
+
+
 
 
 
