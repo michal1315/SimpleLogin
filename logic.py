@@ -96,6 +96,7 @@ def heartbeat(time_out=3):
     time_counting = True
     counter = 0
     while time_counting:
+        print(".", end="")
         time.sleep(1)
         # https://rumprecordings.bandcamp.com/track/asleep-bwoy-de-bhajan-remix
         counter += 1
