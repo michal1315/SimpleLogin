@@ -62,6 +62,7 @@ def create_account_chose():
         log_write()
         pass_write()
         show_message(messages.create_account_finish)
+        heartbeat()
         exit()
     else:
         show_message(messages.create_account_no)
