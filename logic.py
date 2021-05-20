@@ -6,7 +6,6 @@ file_operation = open(data.file_name, mode="r+", encoding="utf-8")
 lines_read = file_operation.readlines()
 
 
-
 def show_message(text):
     print(text)
 
@@ -23,6 +22,13 @@ def add_new_account():
     log_write()
     pass_write()
     return 0
+
+
+def typing_data():
+    show_message(messages.login_txt)
+    type_login()
+    show_message(messages.pass_txt)
+    type_password()
 
 
 def credential_check():
@@ -95,10 +101,6 @@ def heartbeat(time_out=3):
         # print(counter)
         if counter == time_out:
             break
-
-
-
-
 
 
 
