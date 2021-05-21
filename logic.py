@@ -109,6 +109,3 @@ def heartbeat(time_out=3):
         # print(counter)
         if counter == time_out:
             break
-
-
-
