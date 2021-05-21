@@ -24,6 +24,12 @@ def add_new_account():
     return 0
 
 
+def run():
+    show_message(messages.hello_txt)
+    typing_data()
+    credential_check()
+
+
 def typing_data():
     show_message(messages.login_txt)
     type_login()
