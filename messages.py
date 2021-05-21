@@ -1,4 +1,4 @@
-hello_txt = "Witaj w systemie logowania"
+hello_txt = "Witamy w systemie logowania"
 login_txt = "Wprowadż login:"
 pass_txt = "Wprowadż hasło:"
 good_credential = "Zalogowano"
