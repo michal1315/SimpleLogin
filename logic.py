@@ -48,29 +48,37 @@ def typing_data():
     type_login()
     show_message(messages.pass_txt)
     type_password()
+    credential_parser()
 
 
-def credential_check():
+def credential_parser():
+    logins_array = []
+    passwords_array = []
     file_lines_num = file_len()
     current_line = 0
     for read_line in range(file_lines_num):
         if current_line < file_lines_num:
             login = lines_read[current_line].strip("\n")
             password = lines_read[current_line + 1].strip("\n")
-            # print(f"login: {login}")
-            # print(f"pass: {password}")
+            current_line += 2
+            logins_array.append(login)
+            passwords_array.append(password)
+        else:
             # print(f"login podany: {data.usr_login}")
             # print(f"pass podany: {data.usr_pass}")
-            current_line += 2
+            # print(logins_array)
+            # print(password_array)
+            credential_check(logins_array, passwords_array)
 
-            if login == data.usr_login and password == data.usr_pass:
-                show_message(messages.good_credential)
-                exit()
-                break
-        else:
-            show_message(messages.bad_credential)
-            show_message(messages.create_account_answer)
-            create_account_chose()
+
+def credential_check(logins_array, passwords_array,):
+    if data.usr_login in logins_array and data.usr_pass in passwords_array:
+        show_message(messages.good_credential)
+        program_terminate()
+    else:
+        show_message(messages.bad_credential)
+        show_message(messages.create_account_answer)
+        create_account_chose()
 
 
 def create_account_chose():
@@ -84,7 +92,7 @@ def create_account_chose():
         restart()
     else:
         show_message(messages.create_account_no)
-        exit()
+        program_terminate()
 
 
 def file_len():
