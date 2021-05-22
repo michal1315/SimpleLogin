@@ -2,6 +2,7 @@ import time
 import data
 import messages
 import os
+import sys
 
 file_operation = open(data.file_name, mode="r+", encoding="utf-8")
 lines_read = file_operation.readlines()
@@ -19,21 +20,27 @@ def type_password():
     data.usr_pass = input()
 
 
-def add_new_account():
-    log_write()
-    pass_write()
-
-
 def run():
     show_message(messages.hello_txt)
     typing_data()
-    credential_check()
 
 
 def restart():
+    console_clear()
     file_operation.flush()
     file_operation.close()
-    os.system("python app.py")
+    os.execv(sys.executable, ['python'] + sys.argv)
+
+
+def program_terminate():
+    sys.exit()
+
+
+def console_clear():
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
 
 
 def typing_data():
