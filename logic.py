@@ -84,9 +84,11 @@ def credential_check(logins_array, passwords_array,):
 def create_account_chose():
     answer = input()
     if answer.lower() == "y":
+        console_clear()
         show_message(messages.create_account_yes)
         log_write()
         pass_write()
+        console_clear()
         show_message(messages.create_account_finish)
         heartbeat()
         restart()
