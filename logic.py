@@ -1,6 +1,7 @@
 import time
 import data
 import messages
+import os
 
 file_operation = open(data.file_name, mode="r+", encoding="utf-8")
 lines_read = file_operation.readlines()
@@ -21,13 +22,18 @@ def type_password():
 def add_new_account():
     log_write()
     pass_write()
-    return 0
 
 
 def run():
     show_message(messages.hello_txt)
     typing_data()
     credential_check()
+
+
+def restart():
+    file_operation.flush()
+    file_operation.close()
+    os.system("python app.py")
 
 
 def typing_data():
@@ -40,7 +46,6 @@ def typing_data():
 def credential_check():
     file_lines_num = file_len()
     current_line = 0
-
     for read_line in range(file_lines_num):
         if current_line < file_lines_num:
             login = lines_read[current_line].strip("\n")
@@ -53,6 +58,7 @@ def credential_check():
 
             if login == data.usr_login and password == data.usr_pass:
                 show_message(messages.good_credential)
+                exit()
                 break
         else:
             show_message(messages.bad_credential)
@@ -63,13 +69,12 @@ def credential_check():
 def create_account_chose():
     answer = input()
     if answer.lower() == "y":
-
         show_message(messages.create_account_yes)
         log_write()
         pass_write()
         show_message(messages.create_account_finish)
         heartbeat()
-        exit()
+        restart()
     else:
         show_message(messages.create_account_no)
         exit()
@@ -108,4 +113,5 @@ def heartbeat(time_out=3):
         counter += 1
         # print(counter)
         if counter == time_out:
+            print("\n")
             break
