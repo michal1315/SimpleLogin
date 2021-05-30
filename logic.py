@@ -1,3 +1,4 @@
+import random
 import time
 import data
 import messages
@@ -49,6 +50,23 @@ def typing_data():
     show_message(messages.pass_txt)
     type_password()
     credential_parser()
+
+
+def dummy_data():
+    login = ""
+    password = ""
+    data_length = 10
+    character_set = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    for data in range(data_length):
+        # print(len(character_set))
+        login_char_num = random.randint(0, 61)
+        password_char_num = random.randint(0, 61)
+        login_generated_char = character_set[login_char_num]
+        password_generated_char = character_set[password_char_num]
+        login += login_generated_char
+        password += password_generated_char
+    # print(login)
+    # print(password)
 
 
 def file_evaluation():

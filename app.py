@@ -1,4 +1,4 @@
 import logic
 
-# logic.file_evaluation()
+logic.dummy_data()
 logic.run()
