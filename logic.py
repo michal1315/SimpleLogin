@@ -51,6 +51,20 @@ def typing_data():
     credential_parser()
 
 
+def file_evaluation():
+    file_lines_num = file_len()
+    # print(file_lines_num % 2 != 0)
+    if file_lines_num % 2 != 0:
+        show_message(messages.data_file_error)
+        show_message(messages.new_data_file_question)
+        answer = input()
+        if answer.lower() == "y":
+            file_operation.truncate(0)
+        else:
+            show_message(messages.good_bay)
+            program_terminate()
+
+
 def credential_parser():
     logins_array = []
     passwords_array = []
@@ -71,7 +85,7 @@ def credential_parser():
             credential_check(logins_array, passwords_array)
 
 
-def credential_check(logins_array, passwords_array,):
+def credential_check(logins_array, passwords_array):
     if data.usr_login in logins_array and data.usr_pass in passwords_array:
         show_message(messages.good_credential)
         program_terminate()
@@ -93,7 +107,7 @@ def create_account_chose():
         heartbeat()
         restart()
     else:
-        show_message(messages.create_account_no)
+        show_message(messages.good_bay)
         program_terminate()
 
 
