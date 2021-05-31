@@ -53,20 +53,20 @@ def typing_data():
 
 
 def dummy_data():
-    login = ""
-    password = ""
+    counter = 0
     data_length = 10
     character_set = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    for data in range(data_length):
+    while counter < data_length:
         # print(len(character_set))
         login_char_num = random.randint(0, 61)
         password_char_num = random.randint(0, 61)
         login_generated_char = character_set[login_char_num]
         password_generated_char = character_set[password_char_num]
-        login += login_generated_char
-        password += password_generated_char
-    # print(login)
-    # print(password)
+        data.dummy_login += login_generated_char
+        data.dummy_password += password_generated_char
+        counter += 1
+    # print(data.dummy_login)
+    # print(data.dummy_password)
 
 
 def file_evaluation():
