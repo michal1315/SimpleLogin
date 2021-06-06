@@ -73,7 +73,7 @@ def dummy_data():
 def file_evaluation():
     file_lines_num = file_len()
     # print(file_lines_num % 2 != 0)
-    if file_lines_num % 2 != 0:
+    if file_lines_num % 2 != 0 or file_lines_num == 0:
         show_message(messages.data_file_error)
         show_message(messages.new_data_file_question)
         answer = input()
