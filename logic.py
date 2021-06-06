@@ -22,6 +22,7 @@ def type_password():
 
 
 def run():
+    file_evaluation()
     show_message(messages.hello_txt)
     typing_data()
 
@@ -77,7 +78,12 @@ def file_evaluation():
         show_message(messages.new_data_file_question)
         answer = input()
         if answer.lower() == "y":
+            dummy_data()
             file_operation.truncate(0)
+            file_operation.seek(0)
+            write_line(data.dummy_login)
+            write_line(data.dummy_password)
+            restart()
         else:
             show_message(messages.good_bay)
             program_terminate()
@@ -131,7 +137,7 @@ def create_account_chose():
 
 def file_len():
     lines_num = 0
-    for data in lines_read:
+    for line in lines_read:
         lines_num += 1
     return lines_num
 
