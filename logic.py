@@ -5,8 +5,12 @@ import messages
 import os
 import sys
 
-file_operation = open(data.file_name, mode="r+", encoding="utf-8")
-lines_read = file_operation.readlines()
+try:
+    file_operation = open(data.file_name, mode="r+", encoding="utf-8")
+    lines_read = file_operation.readlines()
+except FileNotFoundError:
+    os.system("touch credentials.txt")
+    os.execv(sys.executable, ['python'] + sys.argv)
 
 
 def show_message(text):
