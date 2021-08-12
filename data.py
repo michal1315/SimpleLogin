@@ -6,4 +6,4 @@ dummy_password = ""
 pass_to_write = ""
 db_file = "credentials.txt"
 restart_file_name = "restart.delete_me"
-credentials_file_exist = True
+db_file_exist = True

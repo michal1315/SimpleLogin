@@ -42,8 +42,11 @@ def restart():
 
 def bad_file_restart_detection():
     if os.path.isfile(data.restart_file_name):
-        print("wykryto restart")
-
+        data.db_file_exist = False
+        os.system("rm " + data.restart_file_name)
+        # print("wykryto restart")
+        # print(data.db_file_exist)
+        # heartbeat(3)
 
 
 def program_terminate():
@@ -83,12 +86,14 @@ def dummy_data():
 
 
 def file_evaluation():
+    answer = "y"
     file_lines_num = file_len()
     # print(file_lines_num % 2 != 0)
     if file_lines_num % 2 != 0 or file_lines_num == 0:
-        show_message(messages.data_file_error)
-        show_message(messages.new_data_file_question)
-        answer = input()
+        if data.db_file_exist:
+            show_message(messages.data_file_error)
+            show_message(messages.new_data_file_question)
+            answer = input()
         if answer.lower() == "y":
             dummy_data()
             file_operation.truncate(0)
