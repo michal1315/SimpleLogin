@@ -6,10 +6,11 @@ import os
 import sys
 
 try:
-    file_operation = open(data.file_name, mode="r+", encoding="utf-8")
+    file_operation = open(data.db_file, mode="r+", encoding="utf-8")
     lines_read = file_operation.readlines()
 except FileNotFoundError:
-    os.system("touch credentials.txt")
+    os.system("touch " + data.db_file)
+    os.system("touch " + data.restart_file_name)
     os.execv(sys.executable, ['python'] + sys.argv)
 
 
@@ -26,6 +27,7 @@ def type_password():
 
 
 def run():
+    bad_file_restart_detection()
     file_evaluation()
     show_message(messages.hello_txt)
     typing_data()
@@ -36,6 +38,12 @@ def restart():
     file_operation.flush()
     file_operation.close()
     os.execv(sys.executable, ['python'] + sys.argv)
+
+
+def bad_file_restart_detection():
+    if os.path.isfile(data.restart_file_name):
+        print("wykryto restart")
+
 
 
 def program_terminate():
