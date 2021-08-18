@@ -9,8 +9,12 @@ try:
     file_operation = open(data.db_file, mode="r+", encoding="utf-8")
     lines_read = file_operation.readlines()
 except FileNotFoundError:
-    os.system("touch " + data.db_file)
-    os.system("touch " + data.restart_file_name)
+    if os.name == "nt":
+        os.system("fsutil file createnew " + data.db_file + " 0")
+        os.system("fsutil file createnew " + data.restart_file_name + " 0")
+    else:
+        os.system("touch " + data.db_file)
+        os.system("touch " + data.restart_file_name)
     os.execv(sys.executable, ['python'] + sys.argv)
 
 
@@ -27,7 +31,7 @@ def type_password():
 
 
 def run():
-    bad_file_restart_detection()
+    no_db_restart_detect()
     file_evaluation()
     show_message(messages.hello_txt)
     typing_data()
@@ -40,10 +44,13 @@ def restart():
     os.execv(sys.executable, ['python'] + sys.argv)
 
 
-def bad_file_restart_detection():
+def no_db_restart_detect():
     if os.path.isfile(data.restart_file_name):
         data.db_file_exist = False
-        os.system("rm " + data.restart_file_name)
+        if os.name == "nt":
+            os.system("del " + data.restart_file_name)
+        else:
+            os.system("rm " + data.restart_file_name)
         # print("wykryto restart")
         # print(data.db_file_exist)
         # heartbeat(3)
