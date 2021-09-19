@@ -110,6 +110,7 @@ def file_evaluation():
             restart()
         else:
             show_message(messages.good_bay)
+            heartbeat(5)
             program_terminate()
 
 
@@ -136,6 +137,7 @@ def credential_parser():
 def credential_check(logins_array, passwords_array):
     if data.usr_login in logins_array and data.usr_pass in passwords_array:
         show_message(messages.good_credential)
+        heartbeat(5)
         program_terminate()
     else:
         show_message(messages.bad_credential)
@@ -156,6 +158,7 @@ def create_account_chose():
         restart()
     else:
         show_message(messages.good_bay)
+        heartbeat(5)
         program_terminate()
 
 
