@@ -186,9 +186,9 @@ def write_line(to_write):
     file_operation.write(to_write + "\n")
 
 
-def data_hashing(data):
+def data_hashing(data_to_hash):
     hashing = hashlib.sha256()
-    hashing.update(str(data).encode("utf-8"))
+    hashing.update(str(data_to_hash + data.salt).encode("utf-8"))
     # print(hashing.hexdigest())
 
 
