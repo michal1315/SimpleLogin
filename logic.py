@@ -102,8 +102,9 @@ def file_evaluation():
             dummy_data()
             file_operation.truncate(0)
             file_operation.seek(0)
-            write_line(data.dummy_login)
-            write_line(data.dummy_password)
+            # Write dummy login and password to db file
+            write_line(dummy_data())
+            write_line(dummy_data())
             restart()
         else:
             show_message(messages.good_bay)
