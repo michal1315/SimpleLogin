@@ -148,8 +148,7 @@ def create_account_chose():
     if answer.lower() == "y":
         console_clear()
         show_message(messages.create_account_yes)
-        log_write()
-        pass_write()
+        creating_account()
         console_clear()
         show_message(messages.create_account_finish)
         heartbeat()
@@ -167,13 +166,10 @@ def file_len():
     return lines_num
 
 
-def log_write():
+def creating_account():
     show_message(messages.create_account_log)
     data.log_to_write = input()
     write_line(data.log_to_write)
-
-
-def pass_write():
     show_message(messages.create_account_pass)
     data.pass_to_write = input()
     write_line(data.pass_to_write)
