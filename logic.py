@@ -33,7 +33,7 @@ def type_password():
 
 def run():
     no_db_restart_detect()
-    file_evaluation()
+    #file_evaluation()
     show_message(messages.hello_txt)
     typing_data()
 
@@ -169,10 +169,10 @@ def file_len():
 def creating_account():
     show_message(messages.create_account_log)
     data.log_to_write = input()
-    write_line(data.log_to_write)
     show_message(messages.create_account_pass)
     data.pass_to_write = input()
-    write_line(data.pass_to_write)
+    data_to_write = db_data_generator(data.log_to_write, dummy_data(), data.pass_to_write)
+    write_line(data_to_write)
 
 
 def write_line(to_write):
