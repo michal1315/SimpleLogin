@@ -189,6 +189,12 @@ def data_hashing(data_to_hash):
     # print(hashing.hexdigest())
 
 
+def db_data_generator(login, salt, password):
+    db_data = login + ", " + salt + ", " + password
+    # print(db_data)
+    return db_data
+
+
 def heartbeat(time_out=3):
     time_counting = True
     counter = 0
