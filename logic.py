@@ -28,7 +28,7 @@ def type_login():
 
 
 def type_password():
-    data.usr_pass = input()
+    data.usr_password = input()
 
 
 def run():
@@ -133,7 +133,7 @@ def credential_parser():
 
 
 def credential_check(logins_array, passwords_array):
-    if data.usr_login in logins_array and data.usr_pass in passwords_array:
+    if data.usr_login in logins_array and data.usr_password in passwords_array:
         show_message(messages.good_credential)
         heartbeat(5)
         program_terminate()
@@ -189,6 +189,17 @@ def db_data_generator(login, salt, password):
     db_data = login + ", " + salt + ", " + password
     # print(db_data)
     return db_data
+
+
+def line_splitter(db_line):
+    db_elements = str(db_line)
+    element_array = db_elements.split(", ")
+    data.login_to_compare = element_array[0]
+    data.salt = element_array[1]
+    data.password_to_compare = element_array[2]
+    print(data.login_to_compare)
+    print(data.salt)
+    print(data.password_to_compare)
 
 
 def heartbeat(time_out=3):
