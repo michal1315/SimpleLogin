@@ -113,27 +113,21 @@ def file_evaluation():
 
 
 def credential_parser():
-    logins_array = []
-    passwords_array = []
+    credentials_array = []
     file_lines_num = file_len()
     current_line = 0
     for read_line in range(file_lines_num):
         if current_line < file_lines_num:
-            login = lines_read[current_line].strip("\n")
-            password = lines_read[current_line + 1].strip("\n")
-            current_line += 2
-            logins_array.append(login)
-            passwords_array.append(password)
-        else:
-            # print(f"login podany: {data.usr_login}")
-            # print(f"pass podany: {data.usr_pass}")
-            # print(logins_array)
-            # print(password_array)
-            credential_check(logins_array, passwords_array)
+            db_line = lines_read[current_line].strip("\n")
+            credentials_array.insert(current_line, line_splitter(db_line))
+            current_line += 1
+    # print(credentials_array[1][2])
+    # print(len(credentials_array))
+    credential_check(credentials_array)
 
 
 def credential_check(logins_array, passwords_array):
-    if data.usr_login in logins_array and data.usr_password in passwords_array:
+    if data.usr_login in logins_array and data.usr_pass in passwords_array:
         show_message(messages.good_credential)
         heartbeat(5)
         program_terminate()
@@ -193,13 +187,8 @@ def db_data_generator(login, salt, password):
 
 def line_splitter(db_line):
     db_elements = str(db_line)
-    element_array = db_elements.split(", ")
-    data.login_to_compare = element_array[0]
-    data.salt = element_array[1]
-    data.password_to_compare = element_array[2]
-    print(data.login_to_compare)
-    print(data.salt)
-    print(data.password_to_compare)
+    elements_array = db_elements.split(", ")
+    return elements_array
 
 
 def heartbeat(time_out=3):
