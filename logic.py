@@ -160,7 +160,7 @@ def creating_account():
     show_message(messages.create_account_log)
     data.log_to_write = input()
     show_message(messages.create_account_pass)
-    data.pass_to_write = input()
+    data.pass_to_write = data_hashing(input())
     data_to_write = db_data_generator(data.log_to_write, dummy_data(), data.pass_to_write)
     write_line(data_to_write)
 
@@ -173,6 +173,7 @@ def data_hashing(data_to_hash):
     hashing = hashlib.sha256()
     hashing.update(str(data_to_hash + data.salt).encode("utf-8"))
     # print(hashing.hexdigest())
+    return hashing.hexdigest()
 
 
 def db_data_generator(login, salt, password):
