@@ -23,17 +23,9 @@ def show_message(text):
     print(text)
 
 
-def type_login():
-    data.usr_login = input()
-
-
-def type_password():
-    data.usr_password = input()
-
-
 def run():
     no_db_restart_detect()
-    #file_evaluation()
+    # file_evaluation()
     show_message(messages.hello_txt)
     typing_data()
 
@@ -70,9 +62,9 @@ def console_clear():
 
 def typing_data():
     show_message(messages.login_txt)
-    type_login()
+    data.usr_login = input()
     show_message(messages.pass_txt)
-    type_password()
+    data.usr_password = input()
     credential_parser()
 
 
