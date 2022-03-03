@@ -126,11 +126,15 @@ def credential_parser():
     credential_check(credentials_array)
 
 
-def credential_check(logins_array, passwords_array):
-    if data.usr_login in logins_array and data.usr_pass in passwords_array:
-        show_message(messages.good_credential)
-        heartbeat(5)
-        program_terminate()
+def credential_check(credentials_array):
+    login = 0
+    password = 2
+    for row in range(len(credentials_array)):
+        if data.usr_login == credentials_array[row][login] and data.usr_password == credentials_array[row][password]:
+            # print("dobrze")
+            show_message(messages.good_credential)
+            heartbeat(5)
+            program_terminate()
     else:
         show_message(messages.bad_credential)
         show_message(messages.create_account_answer)
