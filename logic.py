@@ -119,10 +119,11 @@ def credential_parser():
 
 
 def credential_check(credentials_array):
-    login = 0
-    password = 2
     for row in range(len(credentials_array)):
-        if data.usr_login == credentials_array[row][login] and data_hashing(data.usr_password) == credentials_array[row][password]:
+        login = credentials_array[row][0]
+        salt = credentials_array[row][1]
+        password = credentials_array[row][2]
+        if data.usr_login == login and data_hashing(data.usr_password, salt) == password:
             # print("dobrze")
             show_message(messages.good_credential)
             heartbeat(5)
@@ -160,8 +161,9 @@ def creating_account():
     show_message(messages.create_account_log)
     data.log_to_write = input()
     show_message(messages.create_account_pass)
-    data.pass_to_write = data_hashing(input())
-    data_to_write = db_data_generator(data.log_to_write, dummy_data(), data.pass_to_write)
+    data.pass_to_write = input()
+    data.salt = dummy_data()
+    data_to_write = db_data_generator(data.log_to_write, data.salt, data_hashing(data.pass_to_write, data.salt))
     write_line(data_to_write)
 
 
@@ -169,9 +171,9 @@ def write_line(to_write):
     file_operation.write(to_write + "\n")
 
 
-def data_hashing(data_to_hash):
+def data_hashing(data_to_hash, salt):
     hashing = hashlib.sha256()
-    hashing.update(str(data_to_hash + data.salt).encode("utf-8"))
+    hashing.update(str(data_to_hash+salt).encode("utf-8"))
     # print(hashing.hexdigest())
     return hashing.hexdigest()
 
