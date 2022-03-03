@@ -122,7 +122,7 @@ def credential_check(credentials_array):
     login = 0
     password = 2
     for row in range(len(credentials_array)):
-        if data.usr_login == credentials_array[row][login] and data.usr_password == credentials_array[row][password]:
+        if data.usr_login == credentials_array[row][login] and data_hashing(data.usr_password) == credentials_array[row][password]:
             # print("dobrze")
             show_message(messages.good_credential)
             heartbeat(5)
