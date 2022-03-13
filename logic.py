@@ -25,7 +25,7 @@ def show_message(text):
 
 def run():
     no_db_restart_detect()
-    # file_evaluation()
+    file_evaluation()
     show_message(messages.hello_txt)
     typing_data()
 
@@ -84,19 +84,29 @@ def dummy_data():
 def file_evaluation():
     answer = "y"
     file_lines_num = file_len()
-    # print(file_lines_num % 2 != 0)
-    if file_lines_num % 2 != 0 or file_lines_num == 0:
+    file_elements = 0
+    current_line = 0
+    for read_line in range(file_lines_num):
+        if current_line < file_lines_num:
+            db_line = lines_read[current_line].strip("\n")
+            current_line += 1
+            # print(len(line_splitter(db_line)))
+            file_elements += len(line_splitter(db_line))
+    # print(file_elements)
+    if file_elements % 3 != 0 or file_lines_num == 0:
         if data.db_file_exist:
             show_message(messages.data_file_error)
             show_message(messages.new_data_file_question)
             answer = input()
         if answer.lower() == "y":
-            dummy_data()
+            login = dummy_data()
+            password = dummy_data()
+            salt = dummy_data()
             file_operation.truncate(0)
             file_operation.seek(0)
+            data_to_write = db_data_generator(login, salt, data_hashing(password, salt))
             # Write dummy login and password to db file
-            write_line(dummy_data())
-            write_line(dummy_data())
+            write_line(data_to_write)
             restart()
         else:
             show_message(messages.good_bay)
