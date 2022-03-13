@@ -115,24 +115,23 @@ def file_evaluation():
 
 
 def credential_parser():
-    credentials_array = []
     file_lines_num = file_len()
     current_line = 0
     for read_line in range(file_lines_num):
         if current_line < file_lines_num:
             db_line = lines_read[current_line].strip("\n")
-            credentials_array.insert(current_line, line_splitter(db_line))
+            data.credentials_array.insert(current_line, line_splitter(db_line))
             current_line += 1
     # print(credentials_array[1][2])
     # print(len(credentials_array))
-    credential_check(credentials_array)
+    credential_check()
 
 
-def credential_check(credentials_array):
-    for row in range(len(credentials_array)):
-        login = credentials_array[row][0]
-        salt = credentials_array[row][1]
-        password = credentials_array[row][2]
+def credential_check():
+    for row in range(len(data.credentials_array)):
+        login = data.credentials_array[row][0]
+        salt = data.credentials_array[row][1]
+        password = data.credentials_array[row][2]
         if data.usr_login == login and data_hashing(data.usr_password, salt) == password:
             # print("dobrze")
             show_message(messages.good_credential)
@@ -184,6 +183,7 @@ def write_line(to_write):
 def data_hashing(data_to_hash, salt):
     hashing = hashlib.sha256()
     hashing.update(str(data_to_hash+salt).encode("utf-8"))
+    # https://murgemusic.bandcamp.com/track/cant-hurt-me-now-feat-sierra-lundy
     # print(hashing.hexdigest())
     return hashing.hexdigest()
 

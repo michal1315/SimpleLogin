@@ -1,3 +1,4 @@
+credentials_array = []
 usr_login = ""
 usr_password = ""
 login_to_compare = ""
