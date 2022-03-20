@@ -148,7 +148,7 @@ def create_account_chose():
     if answer.lower() == "y":
         console_clear()
         show_message(messages.create_account_yes)
-        creating_account()
+        creating_account_typing()
         console_clear()
         show_message(messages.create_account_finish)
         heartbeat()
@@ -166,12 +166,16 @@ def file_len():
     return lines_num
 
 
-def creating_account():
+def creating_account_typing():
     show_message(messages.create_account_log)
     data.log_to_write = input()
     show_message(messages.create_account_pass)
     data.pass_to_write = input()
     data.salt = dummy_data()
+    creating_account_db_write()
+
+
+def creating_account_db_write():
     data_to_write = db_data_generator(data.log_to_write, data.salt, data_hashing(data.pass_to_write, data.salt))
     write_line(data_to_write)
 
