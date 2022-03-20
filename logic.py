@@ -167,12 +167,34 @@ def file_len():
 
 
 def creating_account_typing():
+    console_clear()
+    if data.login_occupied:
+        show_message(messages.login_occupied_txt)
     show_message(messages.create_account_log)
     data.log_to_write = input()
     show_message(messages.create_account_pass)
     data.pass_to_write = input()
     data.salt = dummy_data()
-    creating_account_db_write()
+    creating_account_validation()
+
+
+def creating_account_validation():
+    logins_array = []
+    for row in range(len(data.credentials_array)):
+        login = data.credentials_array[row][0]
+        logins_array.append(login)
+    if data.log_to_write in logins_array:
+        data.login_occupied = True
+        if data.creating_account_attempts == 3:
+            console_clear()
+            show_message(messages.create_account_failure)
+            show_message(messages.good_bay)
+            heartbeat(5)
+            program_terminate()
+        data.creating_account_attempts += 1
+        creating_account_typing()
+    else:
+        creating_account_db_write()
 
 
 def creating_account_db_write():
