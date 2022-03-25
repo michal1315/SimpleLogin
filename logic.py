@@ -166,9 +166,9 @@ def file_len():
     return lines_num
 
 
-def creating_account_typing():
+def creating_account_typing(login_occupied=False):
     console_clear()
-    if data.login_occupied:
+    if login_occupied:
         show_message(messages.login_occupied_txt)
     show_message(messages.create_account_log)
     data.log_to_write = input()
@@ -184,7 +184,6 @@ def creating_account_validation():
         login = data.credentials_array[row][0]
         logins_array.append(login)
     if data.log_to_write in logins_array:
-        data.login_occupied = True
         if data.creating_account_attempts == 3:
             console_clear()
             show_message(messages.create_account_failure)
@@ -192,7 +191,7 @@ def creating_account_validation():
             heartbeat(5)
             program_terminate()
         data.creating_account_attempts += 1
-        creating_account_typing()
+        creating_account_typing(login_occupied=True)
     else:
         creating_account_db_write()
 

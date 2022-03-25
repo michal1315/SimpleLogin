@@ -9,5 +9,4 @@ salt = ""
 db_file = "credentials.txt"
 restart_file_name = "restart.delete_me"
 db_file_exist = True
-login_occupied = False
 creating_account_attempts = 0
