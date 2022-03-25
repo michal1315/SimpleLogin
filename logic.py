@@ -133,7 +133,6 @@ def credential_check():
         salt = data.credentials_array[row][1]
         password = data.credentials_array[row][2]
         if data.usr_login == login and data_hashing(data.usr_password, salt) == password:
-            # print("dobrze")
             show_message(messages.good_credential)
             heartbeat(5)
             program_terminate()
@@ -166,12 +165,22 @@ def file_len():
     return lines_num
 
 
-def creating_account_typing(login_occupied=False):
+def creating_account_typing(login_occupied=False, big_letter_in_pass=True,
+                            small_letter_in_pass=True, digit_in_pass=True):
     console_clear()
-    if login_occupied:
-        show_message(messages.login_occupied_txt)
+    if login_occupied or not big_letter_in_pass or not small_letter_in_pass or not digit_in_pass:
+        show_message(messages.create_account_failure)
+        if login_occupied:
+            show_message(messages.login_occupied_txt)
+        if not big_letter_in_pass:
+            show_message(messages.lack_big_letter_in_pass)
+        if not small_letter_in_pass:
+            show_message(messages.lack_small_letter_in_pass)
+        if not digit_in_pass:
+            show_message(messages.lack_digit_in_pass)
     show_message(messages.create_account_log)
     data.log_to_write = input()
+    show_message(messages.password_hint)
     show_message(messages.create_account_pass)
     data.pass_to_write = input()
     data.salt = dummy_data()
@@ -180,10 +189,15 @@ def creating_account_typing(login_occupied=False):
 
 def creating_account_validation():
     logins_array = []
+    login_occupied = False
+    big_letter_in_pass = False
+    small_letter_in_pass = False
+    digit_in_pass = False
     for row in range(len(data.credentials_array)):
         login = data.credentials_array[row][0]
         logins_array.append(login)
     if data.log_to_write in logins_array:
+        login_occupied = True
         if data.creating_account_attempts == 3:
             console_clear()
             show_message(messages.create_account_failure)
@@ -191,9 +205,18 @@ def creating_account_validation():
             heartbeat(5)
             program_terminate()
         data.creating_account_attempts += 1
-        creating_account_typing(login_occupied=True)
-    else:
+    for char in data.pass_to_write:
+        if char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+            big_letter_in_pass = True
+        elif char in "abcdefghijklmnopqrstuvwxyz":
+            small_letter_in_pass = True
+        elif char in "0123456789":
+            digit_in_pass = True
+    if not login_occupied and big_letter_in_pass and small_letter_in_pass and digit_in_pass:
         creating_account_db_write()
+    else:
+        creating_account_typing(login_occupied, big_letter_in_pass,
+                                small_letter_in_pass, digit_in_pass)
 
 
 def creating_account_db_write():
