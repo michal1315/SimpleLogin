@@ -5,6 +5,7 @@ import messages
 import os
 import sys
 import hashlib
+import settings
 
 try:
     file_operation = open(data.db_file, mode="r+", encoding="utf-8")
@@ -53,10 +54,11 @@ def program_terminate():
 
 
 def console_clear():
-    if os.name == "nt":
-        os.system("cls")
-    else:
-        os.system("clear")
+    if settings.console_cleaning:
+        if os.name == "nt":
+            os.system("cls")
+        else:
+            os.system("clear")
 
 
 def typing_data():
@@ -190,39 +192,42 @@ def creating_account_typing(login_occupied=False, big_letter_in_pass=True,
 
 
 def creating_account_validation():
-    logins_array = []
-    login_occupied = False
-    big_letter_in_pass = False
-    small_letter_in_pass = False
-    digit_in_pass = False
-    pass_mini_len = False
-    for row in range(len(data.credentials_array)):
-        login = data.credentials_array[row][0]
-        logins_array.append(login)
-    if data.log_to_write in logins_array:
-        login_occupied = True
-        if data.creating_account_attempts == 3:
-            console_clear()
-            show_message(messages.create_account_failure)
-            show_message(messages.good_bay)
-            heartbeat(5)
-            program_terminate()
-        data.creating_account_attempts += 1
-    for char in data.pass_to_write:
-        if char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-            big_letter_in_pass = True
-        if char in "abcdefghijklmnopqrstuvwxyz":
-            small_letter_in_pass = True
-        if char in "0123456789":
-            digit_in_pass = True
-        if len(data.pass_to_write) >= 8:
-            pass_mini_len = True
-    if not login_occupied and big_letter_in_pass and small_letter_in_pass and digit_in_pass and pass_mini_len:
-        creating_account_db_write()
+    if settings.creating_account_data_validation:
+        logins_array = []
+        login_occupied = False
+        big_letter_in_pass = False
+        small_letter_in_pass = False
+        digit_in_pass = False
+        pass_mini_len = False
+        for row in range(len(data.credentials_array)):
+            login = data.credentials_array[row][0]
+            logins_array.append(login)
+        if data.log_to_write in logins_array:
+            login_occupied = True
+            if data.creating_account_attempts == 3:
+                console_clear()
+                show_message(messages.create_account_failure)
+                show_message(messages.good_bay)
+                heartbeat(5)
+                program_terminate()
+            data.creating_account_attempts += 1
+        for char in data.pass_to_write:
+            if char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+                big_letter_in_pass = True
+            if char in "abcdefghijklmnopqrstuvwxyz":
+                small_letter_in_pass = True
+            if char in "0123456789":
+                digit_in_pass = True
+            if len(data.pass_to_write) >= 8:
+                pass_mini_len = True
+        if not login_occupied and big_letter_in_pass and small_letter_in_pass and digit_in_pass and pass_mini_len:
+            creating_account_db_write()
+        else:
+            creating_account_typing(login_occupied, big_letter_in_pass,
+                                    small_letter_in_pass, digit_in_pass,
+                                    pass_mini_len)
     else:
-        creating_account_typing(login_occupied, big_letter_in_pass,
-                                small_letter_in_pass, digit_in_pass,
-                                pass_mini_len)
+        creating_account_db_write()
 
 
 def creating_account_db_write():
