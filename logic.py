@@ -44,7 +44,6 @@ def no_db_restart_detect():
             os.system("del " + data.restart_file_name)
         else:
             os.system("rm " + data.restart_file_name)
-        # print("wykryto restart")
         # print(data.db_file_exist)
         # heartbeat(3)
 
@@ -166,9 +165,10 @@ def file_len():
 
 
 def creating_account_typing(login_occupied=False, big_letter_in_pass=True,
-                            small_letter_in_pass=True, digit_in_pass=True):
+                            small_letter_in_pass=True, digit_in_pass=True,
+                            pass_mini_len=True):
     console_clear()
-    if login_occupied or not big_letter_in_pass or not small_letter_in_pass or not digit_in_pass:
+    if login_occupied or not big_letter_in_pass or not small_letter_in_pass or not digit_in_pass or not pass_mini_len:
         show_message(messages.create_account_failure)
         if login_occupied:
             show_message(messages.login_occupied_txt)
@@ -178,6 +178,8 @@ def creating_account_typing(login_occupied=False, big_letter_in_pass=True,
             show_message(messages.lack_small_letter_in_pass)
         if not digit_in_pass:
             show_message(messages.lack_digit_in_pass)
+        if not pass_mini_len:
+            show_message(messages.pass_to_short)
     show_message(messages.create_account_log)
     data.log_to_write = input()
     show_message(messages.password_hint)
@@ -193,6 +195,7 @@ def creating_account_validation():
     big_letter_in_pass = False
     small_letter_in_pass = False
     digit_in_pass = False
+    pass_mini_len = False
     for row in range(len(data.credentials_array)):
         login = data.credentials_array[row][0]
         logins_array.append(login)
@@ -208,15 +211,18 @@ def creating_account_validation():
     for char in data.pass_to_write:
         if char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
             big_letter_in_pass = True
-        elif char in "abcdefghijklmnopqrstuvwxyz":
+        if char in "abcdefghijklmnopqrstuvwxyz":
             small_letter_in_pass = True
-        elif char in "0123456789":
+        if char in "0123456789":
             digit_in_pass = True
-    if not login_occupied and big_letter_in_pass and small_letter_in_pass and digit_in_pass:
+        if len(data.pass_to_write) >= 8:
+            pass_mini_len = True
+    if not login_occupied and big_letter_in_pass and small_letter_in_pass and digit_in_pass and pass_mini_len:
         creating_account_db_write()
     else:
         creating_account_typing(login_occupied, big_letter_in_pass,
-                                small_letter_in_pass, digit_in_pass)
+                                small_letter_in_pass, digit_in_pass,
+                                pass_mini_len)
 
 
 def creating_account_db_write():
